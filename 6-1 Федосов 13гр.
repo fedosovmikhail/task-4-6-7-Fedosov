@@ -1,0 +1,46 @@
+/*Дана действительная матрица А вида:
+из n строк и m столбцов, в которой не все элементы равны нулю. Получить новую матрицу путем
+деления всех элементов данной матрицы на ее наибольший по модулю элемент.
+*/
+
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main()
+{
+    setlocale(LC_ALL, "Rus");
+    int m, n;
+    double a[30][30];
+    cout << "Размер матрицы:" << endl;
+    cin >> m;
+    if (m > 30)
+        m = 30;
+    n = m;
+    cout << "Матрица:" << endl;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+        {
+            cout << ":";
+            cin >> a[i][j];
+        }
+    double max = a[0][0];
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+            if (a[i][j] > max)
+                max = a[i][j];
+    }
+    cout << "Max=" << max << endl;
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = 0; j < m; ++j)
+        {
+            a[i][j] /= max;
+            cout << setw(10) << a[i][j];
+        }
+        cout << endl;
+    }
+    return 0;
+}
