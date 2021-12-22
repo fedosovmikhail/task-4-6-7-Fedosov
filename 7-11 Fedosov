@@ -1,0 +1,30 @@
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+int main()
+{
+    setlocale(LC_ALL, "rus");
+    char text[1000];
+    int k = 0;
+    int sum = 0;
+    int n = 0;
+    puts("введите текст: ");
+    gets_s(text);
+    n = strlen(text);
+    char prev_char = text[0];
+
+    for (int i = 1; i < n; i++)
+    {
+        if ((text[i] == ' '))
+        {
+            if (text[i - 1] == prev_char && prev_char != ' ')
+                sum++;
+            prev_char = text[i - 1];
+        }
+    }
+
+    cout<<"Количество слов в тексте, у которых первый и последний символы совпадают: "<< sum + 1<<endl;
+    system("pause");
+    return 0;
+}
