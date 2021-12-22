@@ -5,32 +5,60 @@
 
 
 #include <iostream>
-#include <string.h>
+#include <fstream>
+#include <string>
+
 using namespace std;
 
-int main()
-{
-    setlocale(LC_ALL, "rus");
-    char text[1000];
-    int k = 0;
-    int sum = 0;
-    int n = 0;
-    puts("введите текст: ");
-    gets_s(text);
-    n = strlen(text);
-    char prev_char = text[0];
+int count_words(char text[]);
 
-    for (int i = 1; i < n; i++)
+
+int main() {
+    setlocale(LC_ALL, "RU");
+    char text[80];
+    ifstream in("input.txt");
+    if (!in.is_open()) return 1;
+
+    in.getline(text, 80);
+    in.close();
+    cout << text << endl;
+    cout << "Количество слов, где первый и последний символ равны: " << count_words(text) << endl;
+
+
+}
+
+int count_words(char text[]) {
+    int cstr_size, sum = 0;
+    int word_first_char = 0;
+    int word_last_char = 0;
+    cstr_size = strlen(text);
+
+    int i = 0;
+    while (i < cstr_size)
     {
-        if ((text[i] == ' '))
+        if (text[i] == ' ' || text[i] == '.' || text[i] == '!' || text[i] == '?')
         {
-            if (text[i - 1] == prev_char && prev_char != ' ')
+            if (i)
+                word_last_char = i - 1;
+            else
+                word_last_char = i;
+
+            if (text[word_first_char] == text[word_last_char])
                 sum++;
-            prev_char = text[i - 1];
+
+            word_first_char = i + 1;
         }
+        ++i;
     }
 
-    cout<<"Количество слов в тексте, у которых первый и последний символы совпадают: "<< sum + 1<<endl;
-    system("pause");
-    return 0;
+    if (i)
+        word_last_char = i - 1;
+    else
+        word_last_char = i;
+
+    if (text[word_first_char] == text[word_last_char])
+        sum++;
+
+    return sum;
 }
+
